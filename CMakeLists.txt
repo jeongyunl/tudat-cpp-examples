@@ -12,3 +12,4 @@ add_compile_definitions(EIGEN_NO_DEBUG)
 
 add_subdirectory(time_conversion)
 add_subdirectory(frame_conversion)
+add_subdirectory(propagation)
