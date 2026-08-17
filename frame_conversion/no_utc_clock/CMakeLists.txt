@@ -1,0 +1,7 @@
+add_executable(ex_spice_frame_conversion ex_spice_frame_conversion.cpp)
+target_include_directories(ex_spice_frame_conversion PRIVATE ${CMAKE_SOURCE_DIR})
+target_link_libraries(ex_spice_frame_conversion PUBLIC ${Tudat_PROPAGATION_LIBRARIES} time_converter)
+
+add_executable(ex_tudat_frame_conversion ex_tudat_frame_conversion.cpp)
+target_include_directories(ex_tudat_frame_conversion PRIVATE ${CMAKE_SOURCE_DIR})
+target_link_libraries(ex_tudat_frame_conversion PUBLIC ${Tudat_PROPAGATION_LIBRARIES} time_converter)
