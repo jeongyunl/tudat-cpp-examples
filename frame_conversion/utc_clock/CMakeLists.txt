@@ -1,0 +1,5 @@
+add_executable(ex_spice_frame_conversion ex_spice_frame_conversion.cpp)
+target_link_libraries(ex_spice_frame_conversion PUBLIC ${Tudat_PROPAGATION_LIBRARIES})
+
+add_executable(ex_tudat_frame_conversion ex_tudat_frame_conversion.cpp)
+target_link_libraries(ex_tudat_frame_conversion PUBLIC ${Tudat_PROPAGATION_LIBRARIES})

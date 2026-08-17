@@ -2,7 +2,7 @@
 #include "base/time_converter_base.h"
 #include "chrono/time_converter_chrono.h"
 
-#include <format>
+#include <fmt/chrono.h>
 #include <iostream>
 #include <list>
 #include <map>
@@ -183,7 +183,12 @@ int main(int argc, char* argv[])
 			{
 				for(const auto word : std::views::split(std::string_view(optarg), std::string_view(",")))
 				{
-					output_format_list.emplace_back(std::string(word.begin(), word.end()));
+					std::string token;
+					for(char c : word)
+					{
+						token += c;
+					}
+					output_format_list.emplace_back(token);
 				}
 			}
 			break;
@@ -256,7 +261,7 @@ int main(int argc, char* argv[])
 
 			if(std::holds_alternative<double>(result))
 			{
-				std::cout << std::format("{:.3f}", std::get<double>(result));
+				std::cout << fmt::format("{:.3f}", std::get<double>(result));
 			}
 			else if(std::holds_alternative<std::string>(result))
 			{
@@ -268,7 +273,7 @@ int main(int argc, char* argv[])
 				switch(output_format)
 				{
 					case TimeFormat::CHRONO_SYS_TIME:
-						std::cout << std::format(
+						std::cout << fmt::format(
 							"{:.3f} (since {} UTC)",
 							std::chrono::duration<double>(sys_time.time_since_epoch()).count(),
 							std::chrono::floor<std::chrono::seconds>(std::chrono::system_clock::time_point{})
@@ -277,7 +282,7 @@ int main(int argc, char* argv[])
 					case TimeFormat::CHRONO_SYS_TIME_ISO:
 					default:
 						std::cout
-							<< std::format("{} UTC", std::chrono::floor<std::chrono::milliseconds>(sys_time));
+							<< fmt::format("{} UTC", std::chrono::floor<std::chrono::milliseconds>(sys_time));
 						break;
 				}
 			}
@@ -288,7 +293,7 @@ int main(int argc, char* argv[])
 				switch(output_format)
 				{
 					case TimeFormat::CHRONO_UTC_TIME:
-						std::cout << std::format(
+						std::cout << fmt::format(
 							"{:.3f} (since {} UTC)",
 							std::chrono::duration<double>(utc_time.time_since_epoch()).count(),
 							std::chrono::floor<std::chrono::seconds>(std::chrono::utc_clock::time_point{})
@@ -297,7 +302,7 @@ int main(int argc, char* argv[])
 					case TimeFormat::CHRONO_UTC_TIME_ISO:
 					default:
 						std::cout
-							<< std::format("{} UTC", std::chrono::floor<std::chrono::milliseconds>(utc_time));
+							<< fmt::format("{} UTC", std::chrono::floor<std::chrono::milliseconds>(utc_time));
 						break;
 				}
 			}
@@ -309,7 +314,7 @@ int main(int argc, char* argv[])
 				switch(output_format)
 				{
 					case TimeFormat::CHRONO_TAI_TIME:
-						std::cout << std::format(
+						std::cout << fmt::format(
 							"{:.3f} (since {} UTC)",
 							std::chrono::duration<double>(tai_time.time_since_epoch()).count(),
 							std::chrono::floor<std::chrono::seconds>(
@@ -319,7 +324,7 @@ int main(int argc, char* argv[])
 						break;
 					case TimeFormat::CHRONO_TAI_TIME_ISO:
 					default:
-						std::cout << std::format(
+						std::cout << fmt::format(
 							"{} UTC",
 							std::chrono::floor<std::chrono::milliseconds>(
 								std::chrono::tai_clock::to_utc(tai_time)

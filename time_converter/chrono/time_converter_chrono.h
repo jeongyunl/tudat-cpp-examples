@@ -99,16 +99,16 @@ public:
 
 	) const
 	{
-		// Ignored since std::format does not support fractional seconds formatting
+		// Ignored since fmt::format does not support fractional seconds formatting
 		(void)fractional_second_places;
 
 		if(use_t_separator)
 		{
-			return std::format("{:%FT%T}", sys_time);
+			return fmt::format("{:%FT%T}", sys_time);
 		}
 		else
 		{
-			return std::format("{:%F %T}", sys_time);
+			return fmt::format("{:%F %T}", sys_time);
 		}
 	}
 
@@ -198,16 +198,16 @@ public:
 
 	) const
 	{
-		// Ignored since std::format does not support fractional seconds formatting
+		// Ignored since fmt::format does not support fractional seconds formatting
 		(void)fractional_second_places;
 
 		if(use_t_separator)
 		{
-			return std::format("{:%FT%T}", utc_time);
+			return fmt::format("{:%FT%T}", utc_time);
 		}
 		else
 		{
-			return std::format("{:%F %T}", utc_time);
+			return fmt::format("{:%F %T}", utc_time);
 		}
 	}
 

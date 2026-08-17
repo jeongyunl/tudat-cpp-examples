@@ -1,5 +1,5 @@
 #include <chrono>
-#include <format>
+#include <fmt/chrono.h>
 #include <iostream>
 
 // Demonstrate conversion between a UTC time point and the TT J2000 epoch.
@@ -16,14 +16,14 @@ int main()
     const std::chrono::utc_time TT_J2000_EPOCH_IN_UTC_TIME
         = std::chrono::utc_clock::from_sys(TT_J2000_EPOCH_IN_SYS_TIME);
 
-    std::cout << std::format("tt j2000 epoch: {} UTC", TT_J2000_EPOCH_IN_UTC_TIME)
+    std::cout << fmt::format("tt j2000 epoch: {} UTC", TT_J2000_EPOCH_IN_UTC_TIME)
               << '\n';
 
     // Capture the current UTC time and print it.
     const auto utc_now = std::chrono::time_point_cast<std::chrono::milliseconds>(
         std::chrono::utc_clock::now());
 
-    std::cout << std::format("utc_now: {} UTC", utc_now) << '\n';
+    std::cout << fmt::format("utc_now: {} UTC", utc_now) << '\n';
 
     // Compute the elapsed time in seconds from the J2000 epoch.
     const double seconds_since_tt_j2000
@@ -31,14 +31,14 @@ int main()
             utc_now - TT_J2000_EPOCH_IN_UTC_TIME)
               .count();
 
-    std::cout << std::format(
+    std::cout << fmt::format(
         "seconds_since_tt_j2000: {:.3f}", seconds_since_tt_j2000)
               << '\n';
 
     // Reconstruct a UTC time point from the elapsed seconds.
     const auto utc_time_from_tt = TT_J2000_EPOCH_IN_UTC_TIME
         + std::chrono::duration<double>(seconds_since_tt_j2000);
-    std::cout << std::format("utc_time_from_tt: {} UTC", utc_time_from_tt)
+    std::cout << fmt::format("utc_time_from_tt: {} UTC", utc_time_from_tt)
               << '\n';
 
     return 0;

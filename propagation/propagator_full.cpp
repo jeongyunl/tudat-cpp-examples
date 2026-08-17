@@ -8,7 +8,7 @@
 
 #include "../time_conversion/time_conversion.h"
 
-#include <format>
+#include <fmt/core.h>
 #include <memory>
 
 enum class RotationModel {

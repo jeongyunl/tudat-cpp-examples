@@ -5,7 +5,7 @@
 #include <array>
 #include <cctype>
 #include <cmath>
-#include <format>
+#include <fmt/core.h>
 #include <fstream>
 #include <stdexcept>
 
@@ -188,7 +188,7 @@ std::string TimeConverterBase::parsed_utc_iso_to_utc_iso(
 
 	const char separator = use_t_separator ? 'T' : ' ';
 
-	std::string out = std::format(
+	std::string out = fmt::format(
 		"{:04}-{:02}-{:02}{}{:02}:{:02}:{:02}",
 		parsed_utc_iso.year,
 		parsed_utc_iso.month,
@@ -247,7 +247,7 @@ std::string TimeConverterBase::parsed_utc_iso_to_utc_iso(
 		const int abs_offset_seconds = std::abs(offset_seconds);
 		const int offset_hours = abs_offset_seconds / SECONDS_PER_HOUR;
 		const int offset_minutes = (abs_offset_seconds % SECONDS_PER_HOUR) / SECONDS_PER_MINUTE;
-		out += std::format("{}{:02}:{:02}", sign, offset_hours, offset_minutes);
+		out += fmt::format("{}{:02}:{:02}", sign, offset_hours, offset_minutes);
 	}
 
 	return out;

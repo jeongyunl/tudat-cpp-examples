@@ -17,11 +17,11 @@ int main()
     // Get the current UTC time and print it.
     const auto utc_now = std::chrono::time_point_cast<std::chrono::milliseconds>(
         std::chrono::utc_clock::now());
-    std::cout << std::format("utc_now:\n\t{} UTC", utc_now) << '\n';
+    std::cout << fmt::format("utc_now:\n\t{} UTC", utc_now) << '\n';
 
     // Convert the current UTC time to TT seconds relative to the J2000 epoch.
     const double tt_j2000_now = chrono_utc_time_to_tt_j2000(utc_now);
-    std::cout << std::format("tt_j2000_now:\n\t{:.3f} TT", tt_j2000_now) << '\n';
+    std::cout << fmt::format("tt_j2000_now:\n\t{:.3f} TT", tt_j2000_now) << '\n';
 
     std::cout << '\n';
 
@@ -30,7 +30,7 @@ int main()
     {
         const double approx_tdb_j2000
             = tudat::basic_astrodynamics::approximateConvertTTtoTDB(tt_j2000_now);
-        std::cout << std::format(
+        std::cout << fmt::format(
             "approx_tdb_j2000:\n\t{:.3f} TDB", approx_tdb_j2000)
                   << '\n';
 
@@ -45,12 +45,12 @@ int main()
     {
         const double sofa_tdb_j2000
             = tudat::sofa_interface::convertTTtoTDB<double>(tt_j2000_now, { });
-        std::cout << std::format("sofa_tdb_j2000:\n\t{:.3f} TDB", sofa_tdb_j2000)
+        std::cout << fmt::format("sofa_tdb_j2000:\n\t{:.3f} TDB", sofa_tdb_j2000)
                   << '\n';
 
         const double sofa_tt_j2000
             = tudat::sofa_interface::convertTDBtoTT<double>(sofa_tdb_j2000, { });
-        std::cout << std::format("sofa_tt_j2000:\n\t{:.3f} TT", sofa_tt_j2000)
+        std::cout << fmt::format("sofa_tt_j2000:\n\t{:.3f} TT", sofa_tt_j2000)
                   << '\n';
     }
 
@@ -71,7 +71,7 @@ int main()
             tt_j2000_now, // inputTimeValue
             { } // earthFixedPosition
         );
-        std::cout << std::format(
+        std::cout << fmt::format(
             "converted_tdb_j2000:\n\t{:.3f} TDB", converted_tdb_j2000)
                   << '\n';
 
@@ -81,7 +81,7 @@ int main()
             converted_tdb_j2000, // inputTimeValue
             { } // earthFixedPosition
         );
-        std::cout << std::format(
+        std::cout << fmt::format(
             "converted_tt_j2000:\n\t{:.3f} TT", converted_tt_j2000)
                   << '\n';
     }

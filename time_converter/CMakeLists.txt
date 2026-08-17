@@ -1,5 +1,5 @@
 add_library(
-    convert_time STATIC
+    time_converter STATIC
     time_converter.cpp
     base/time_converter_base.cpp
     base/iso8601.cpp
@@ -13,25 +13,25 @@ add_library(
 
 # Apply coverage flags only to this project targets when enabled
 if(BUILD_TESTING AND ENABLE_COVERAGE)
-    target_link_libraries(convert_time PUBLIC coverage_config)
+    target_link_libraries(time_converter PUBLIC coverage_config)
 endif()
 
-target_include_directories(convert_time PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(time_converter PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-target_link_libraries(convert_time PUBLIC ${Tudat_PROPAGATION_LIBRARIES})
+target_link_libraries(time_converter PUBLIC ${Tudat_PROPAGATION_LIBRARIES} Boost::regex fmt::fmt)
 
 # CLI
 
-add_executable(time_converter time_converter_cli.cpp)
+add_executable(time_converter_cli time_converter_cli.cpp)
 
 # Allow includes like: #include "convert_time_disp_fn.h" (header lives in this
 # directory)
 target_include_directories(
-    time_converter PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
+    time_converter_cli PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
                              ${CMAKE_CURRENT_SOURCE_DIR}/tudat
 )
 
-target_link_libraries(time_converter PRIVATE convert_time)
+target_link_libraries(time_converter_cli PRIVATE time_converter fmt::fmt)
 if(BUILD_TESTING)
     add_executable(
         convert_time_gtest test/convert_time_gtest.cpp
@@ -40,7 +40,7 @@ if(BUILD_TESTING)
 
     target_link_libraries(
         convert_time_gtest
-        PRIVATE convert_time
+        PRIVATE time_converter
                 GTest::gtest
                 GTest::gtest_main
     )
@@ -76,7 +76,7 @@ if(BUILD_TESTING)
 
     target_link_libraries(
         convert_time_j2000_gtest
-        PRIVATE convert_time
+        PRIVATE time_converter
                 GTest::gtest
                 GTest::gtest_main
     )
@@ -94,14 +94,14 @@ if(BUILD_TESTING)
 
     target_link_libraries(
         convert_time_iso8601_gtest
-        PRIVATE convert_time
+        PRIVATE time_converter
                 GTest::gtest
                 GTest::gtest_main
     )
 
     target_link_libraries(
         convert_time_epochs_gtest
-        PRIVATE convert_time
+        PRIVATE time_converter
                 GTest::gtest
                 GTest::gtest_main
     )
@@ -128,7 +128,7 @@ if(BUILD_TESTING)
 
     target_link_libraries(
         convert_time_disp_tbl_gtest
-        PRIVATE convert_time
+        PRIVATE time_converter
                 GTest::gtest
                 GTest::gtest_main
     )
@@ -154,9 +154,10 @@ if(BUILD_TESTING)
 
     target_link_libraries(
         convert_time_chrono_gtest
-        PRIVATE convert_time
+        PRIVATE time_converter
                 GTest::gtest
                 GTest::gtest_main
+                GTest::gmock
     )
 
     if(ENABLE_COVERAGE)
@@ -180,7 +181,7 @@ if(BUILD_TESTING)
 
     target_link_libraries(
         convert_time_tudat_disp_tbl_gtest
-        PRIVATE convert_time
+        PRIVATE time_converter
                 GTest::gtest
                 GTest::gtest_main
     )

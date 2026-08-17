@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.27)
+cmake_minimum_required(VERSION 3.22)
 project(tudat-examples)
 
 include(FetchContent)
@@ -6,7 +6,8 @@ include(CTest)
 
 find_package(tudat REQUIRED)
 find_package(Eigen3 REQUIRED)
-# find_package(nrlmsise00 REQUIRED)
+find_package(Boost REQUIRED COMPONENTS regex)
+find_package(fmt REQUIRED)
 
 include_directories(${EIGEN3_INCLUDE_DIRS})
 
@@ -14,7 +15,7 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_compile_definitions(EIGEN_NO_DEBUG)
 add_compile_definitions(
-    NOTABLE_EPOCHS_FILE="${CMAKE_CURRENT_SOURCE_DIR}/tools/time_converter/test/notable_epochs.dat"
+    NOTABLE_EPOCHS_FILE="${CMAKE_CURRENT_SOURCE_DIR}/time_converter/test/notable_epochs.dat"
 )
 
 if(BUILD_TESTING)
@@ -99,7 +100,7 @@ if(BUILD_TESTING)
     FetchContent_MakeAvailable(googletest)
 endif()
 
+add_subdirectory(time_converter)
 add_subdirectory(time_conversion)
 add_subdirectory(frame_conversion)
-add_subdirectory(propagation)
-add_subdirectory(tools)
+#add_subdirectory(propagation)

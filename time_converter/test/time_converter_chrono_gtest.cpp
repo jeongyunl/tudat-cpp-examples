@@ -231,7 +231,7 @@ TEST_F(ConvertTimeChrono, IsoToAllNumericScalesMatchReferenceData)
 #ifdef HAS_CHRONO_TAI_CLOCK
 		{
 			const auto tai_time = TimeConverterChrono::instance().utc_iso_to_tai_time(record.iso);
-			const auto iso_from_tai = std::format("{:%F %T}", std::chrono::tai_clock::to_utc(tai_time));
+			const auto iso_from_tai = fmt::format("{:%F %T}", std::chrono::tai_clock::to_utc(tai_time));
 			EXPECT_TRUE(TimeConverterChrono::instance().iso_8601_equal(record.iso, iso_from_tai, 3))
 				<< record.iso << " != " << iso_from_tai;
 		}
@@ -253,21 +253,21 @@ TEST_F(ConvertTimeChrono, IsoToAllNumericScalesMatchReferenceData)
 #ifdef HAS_CHRONO_UTC_CLOCK
 			{
 				const auto utc_time = TimeConverterChrono::instance().tai_j2000_to_utc_time(record.tai);
-				const auto iso_from_utc = std::format("{:%F %T}", utc_time);
+				const auto iso_from_utc = fmt::format("{:%F %T}", utc_time);
 				EXPECT_TRUE(TimeConverterChrono::instance().iso_8601_equal(record.iso, iso_from_utc, 3))
 					<< record.iso << " != " << iso_from_utc;
 			}
 
 			{
 				const auto utc_time = TimeConverterChrono::instance().tt_j2000_to_utc_time(record.tt);
-				const auto iso_from_utc = std::format("{:%F %T}", utc_time);
+				const auto iso_from_utc = fmt::format("{:%F %T}", utc_time);
 				EXPECT_TRUE(TimeConverterChrono::instance().iso_8601_equal(record.iso, iso_from_utc, 3))
 					<< record.iso << " != " << iso_from_utc;
 			}
 
 			{
 				const auto utc_time = TimeConverterChrono::instance().tdb_j2000_to_utc_time(record.tdb);
-				const auto iso_from_utc = std::format("{:%F %T}", utc_time);
+				const auto iso_from_utc = fmt::format("{:%F %T}", utc_time);
 				EXPECT_TRUE(TimeConverterChrono::instance().iso_8601_equal(record.iso, iso_from_utc, 3))
 					<< record.iso << " != " << iso_from_utc;
 			}
@@ -276,14 +276,14 @@ TEST_F(ConvertTimeChrono, IsoToAllNumericScalesMatchReferenceData)
 #ifdef HAS_CHRONO_TAI_CLOCK
 			{
 				const auto tai_time = TimeConverterChrono::instance().tai_j2000_to_tai_time(record.tai);
-				const auto iso_from_tai = std::format("{:%F %T}", std::chrono::tai_clock::to_utc(tai_time));
+				const auto iso_from_tai = fmt::format("{:%F %T}", std::chrono::tai_clock::to_utc(tai_time));
 				EXPECT_TRUE(TimeConverterChrono::instance().iso_8601_equal(record.iso, iso_from_tai, 3))
 					<< record.iso << " != " << iso_from_tai;
 			}
 
 			{
 				const auto tai_time = TimeConverterChrono::instance().tt_j2000_to_tai_time(record.tt);
-				const auto iso_from_tai = std::format("{:%F %T}", std::chrono::tai_clock::to_utc(tai_time));
+				const auto iso_from_tai = fmt::format("{:%F %T}", std::chrono::tai_clock::to_utc(tai_time));
 				EXPECT_TRUE(TimeConverterChrono::instance().iso_8601_equal(record.iso, iso_from_tai, 3))
 					<< record.iso << " != " << iso_from_tai;
 			}
@@ -318,14 +318,14 @@ TEST_F(ConvertTimeChrono, IsoToAllNumericScalesMatchReferenceData)
 #ifdef HAS_CHRONO_UTC_CLOCK
 		{
 			const auto utc_time = TimeConverterChrono::instance().posix_to_utc_time(record.posix);
-			const auto iso_from_utc = std::format("{:%F %T}", utc_time);
+			const auto iso_from_utc = fmt::format("{:%F %T}", utc_time);
 			EXPECT_TRUE(TimeConverterChrono::instance().iso_8601_equal(record.iso, iso_from_utc, 3))
 				<< record.iso << " != " << iso_from_utc;
 		}
 
 		{
 			const auto utc_time = TimeConverterChrono::instance().utc_j2000_to_utc_time(record.utc);
-			const auto iso_from_utc = std::format("{:%F %T}", utc_time);
+			const auto iso_from_utc = fmt::format("{:%F %T}", utc_time);
 			EXPECT_TRUE(TimeConverterChrono::instance().iso_8601_equal(record.iso, iso_from_utc, 3))
 				<< record.iso << " != " << iso_from_utc;
 		}
@@ -334,14 +334,14 @@ TEST_F(ConvertTimeChrono, IsoToAllNumericScalesMatchReferenceData)
 #ifdef HAS_CHRONO_TAI_CLOCK
 		{
 			const auto tai_time = TimeConverterChrono::instance().posix_to_tai_time(record.posix);
-			const auto iso_from_tai = std::format("{:%F %T}", std::chrono::tai_clock::to_utc(tai_time));
+			const auto iso_from_tai = fmt::format("{:%F %T}", std::chrono::tai_clock::to_utc(tai_time));
 			EXPECT_TRUE(TimeConverterChrono::instance().iso_8601_equal(record.iso, iso_from_tai, 3))
 				<< record.iso << " != " << iso_from_tai;
 		}
 
 		{
 			const auto tai_time = TimeConverterChrono::instance().utc_j2000_to_tai_time(record.utc);
-			const auto iso_from_tai = std::format("{:%F %T}", std::chrono::tai_clock::to_utc(tai_time));
+			const auto iso_from_tai = fmt::format("{:%F %T}", std::chrono::tai_clock::to_utc(tai_time));
 			EXPECT_TRUE(TimeConverterChrono::instance().iso_8601_equal(record.iso, iso_from_tai, 3))
 				<< record.iso << " != " << iso_from_tai;
 		}

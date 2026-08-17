@@ -1,25 +1,9 @@
 #include "../time_conversion/time_conversion.h"
-#include "spice_frame_conversion.h"
+#include "tudat_frame_conversion.h"
 #include <tudat/io/basicInputOutput.h>
 
 int main()
 {
-    // Load the SPICE kernels required for frame transformation support.
-    const auto spice_kernel_dir = tudat::paths::getSpiceKernelPath() + '/';
-
-    const auto spice_kernel_files = std::to_array<std::string_view>(
-        { "naif0012.tls", "earth_200101_990825_predict.bpc" });
-
-    for (const auto spice_kernel_file_name : spice_kernel_files) {
-        const auto full_spice_kernel_path
-            = spice_kernel_dir + spice_kernel_file_name.data();
-
-        std::cout << std::format(
-            "Loading SPICE kernel: {}", full_spice_kernel_path)
-                  << '\n';
-        tudat::spice_interface::loadSpiceKernelInTudat(full_spice_kernel_path);
-    }
-
     // clang-format off
     //
     // Example ECI (ICRF) state vector (units: km, km/s)
@@ -34,8 +18,8 @@ int main()
     const auto time_str = "2026-07-28T00:00:00";
 
     const auto sys_tp = parse_iso8601_utc_time(time_str);
-    std::cout << std::format("time_str: {} UTC", time_str) << '\n';
-    std::cout << std::format("sys_tp:   {:%FT%H:%M:%OS} UTC", sys_tp) << '\n';
+    std::cout << fmt::format("time_str: {} UTC", time_str) << '\n';
+    std::cout << fmt::format("sys_tp:   {:%FT%H:%M:%OS} UTC", sys_tp) << '\n';
     const auto tt_j2000 = chrono_sys_time_to_tt_j2000(sys_tp);
 
     // Define the reference ECI and ECEF state vectors used for the conversion
@@ -58,13 +42,13 @@ int main()
         2.131197452 * 1000 // vz meters per second
     };
 
-    std::cout << std::format(
+    std::cout << fmt::format(
         "ref_eci_state:\n\t{:.6f} {:.6f} {:.6f} {:.6f} {:.6f} {:.6f}",
         ref_eci_state[0], ref_eci_state[1], ref_eci_state[2], ref_eci_state[3],
         ref_eci_state[4], ref_eci_state[5])
               << '\n';
 
-    std::cout << std::format(
+    std::cout << fmt::format(
         "ref_ecef_state:\n\t{:.6f} {:.6f} {:.6f} {:.6f} {:.6f} {:.6f}",
         ref_ecef_state[0], ref_ecef_state[1], ref_ecef_state[2],
         ref_ecef_state[3], ref_ecef_state[4], ref_ecef_state[5])
@@ -73,9 +57,9 @@ int main()
     {
         StateVector ecef_state;
 
-        SpiceEciToEcef(tt_j2000, ref_eci_state, ecef_state);
+        TudatEciToEcef(tt_j2000, ref_eci_state, ecef_state);
 
-        std::cout << std::format("Converted ref_eci_state to ECEF:\n\t{:.6f} "
+        std::cout << fmt::format("Converted ref_eci_state to ECEF:\n\t{:.6f} "
                                  "{:.6f} {:.6f} {:.6f} {:.6f} {:.6f}",
             ecef_state[0], ecef_state[1], ecef_state[2], ecef_state[3],
             ecef_state[4], ecef_state[5])
@@ -85,9 +69,9 @@ int main()
     {
         StateVector eci_state;
 
-        SpiceEcefToEci(tt_j2000, ref_ecef_state, eci_state);
+        TudatEcefToEci(tt_j2000, ref_ecef_state, eci_state);
 
-        std::cout << std::format("Converted ref_ecef_state to ECI:\n\t{:.6f} "
+        std::cout << fmt::format("Converted ref_ecef_state to ECI:\n\t{:.6f} "
                                  "{:.6f} {:.6f} {:.6f} {:.6f} {:.6f}",
             eci_state[0], eci_state[1], eci_state[2], eci_state[3], eci_state[4],
             eci_state[5])
